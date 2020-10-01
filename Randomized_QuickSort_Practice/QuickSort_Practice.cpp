@@ -1,0 +1,76 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+pair<int, int> Partition3(vector<int> &a, int l, int r){
+  int left = l;
+  int right = r;
+  int pivot_value = a[left];
+
+  
+  int idx = l;
+  pair<int, int> Positions;
+  
+  if(right - left <=1){
+    if(a[left] > a[right]) swap(a[left], a[right]);
+    Positions.first = left;
+    Positions.second = right;
+    return Positions;
+  }
+  
+  while(idx <= right){
+    
+    if(a[idx] < pivot_value){
+      swap(a[idx], a[left]);
+      idx++;
+      left++;
+    }
+
+    else if(a[idx] == pivot_value){
+      idx++;
+    }
+
+    else{
+      swap(a[idx], a[right]);
+      right--;
+    }
+  }
+  
+  //pair<int, int> Positions;
+  Positions.first = left;
+  Positions.second = right;
+  
+  return Positions;
+}
+
+
+void RandomizedQuickSort(vector<int>& a, int l, int r){
+  if(l < r){
+    int k = rand() % r; //Picking out a random element in the vector
+    swap(a[l], a[k]); //Swapping the left most element with some random element inside the vector
+
+    pair<int, int> Middle_Points = Partition3(a, l, r);
+
+    RandomizedQuickSort(a, l, Middle_Points.first - 1);
+    RandomizedQuickSort(a, Middle_Points.second + 1, r);
+    
+  }
+}
+
+int main(){
+
+  vector<int> SomeNumbers = {4, 1, 4, 3, 4, 2, 5};
+  cout << "The elements in the unsorted array are: " << endl;
+  for(int i = 0; i < SomeNumbers.size(); i++) cout << SomeNumbers[i] << " ";
+  cout << "\n";
+
+  RandomizedQuickSort(SomeNumbers, 0, SomeNumbers.size() - 1);
+
+  cout << "The elements in the sorted array are: " <<   endl;
+  for(int i = 0; i < SomeNumbers.size(); i++) cout << SomeNumbers[i] << " ";
+  cout << "\n";
+  
+  
+  return 0;
+}

@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int IdxEqualToEntry(vector<int> &Input, int Target){
+
+  int l = 0;
+  int r = Input.size() - 1;
+
+  while (l < r){
+    int m = l + (r - l)/2;
+    int result;
+
+    result = m - Input[m];
+
+    if(result == 0) return m;
+    else if(result > 0){
+      l = m + 1;
+    }
+    else{
+      r = m;
+    }
+    
+  }
+
+  return -1;
+}
+
+int main(){
+
+  vector<int> Some_Numbers = {1, 2, 2, 3, 3};
+  int Result = IdxEqualToEntry(Some_Numbers, 2);
+
+  cout << Result;
+  
+  return 0;
+}
+

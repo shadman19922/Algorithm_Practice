@@ -1,0 +1,13 @@
+#include <iostream>
+
+
+int MinCameras(vector<pair<int, int>> Intervals){
+
+
+}
+
+
+int main(){
+
+  return 0;
+}
