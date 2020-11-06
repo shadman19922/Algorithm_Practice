@@ -1,0 +1,14 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+
+
+int main(){
+
+  vector<int> Some_Numbers = 
+
+  return 0;
+}

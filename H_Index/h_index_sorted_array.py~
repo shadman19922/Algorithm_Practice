@@ -1,0 +1,11 @@
+def compute_h_index(Input):
+    Input.sort()
+
+    left = 0
+    right = len(Input) - 1
+    nElem = len(Input) - 1
+    
+    while left < right:
+        middle = left + (right - left)/2
+        if()
+    
