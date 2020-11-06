@@ -1,0 +1,74 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self, list):
+        self.head = None;
+
+
+def MergeList(L1: LinkedList, L2: LinkedList):
+    #L1.head = node1
+    #L2.head = node2
+
+    result = LinkedList()
+    
+    while L1.head.next != None or L2.head.next != None:
+        print("The head of Linked List 1 is: ", LinkedList1.head.data, "\n")
+        print("The head of Linked List 2 is: ", LinkedList2.head.data, "\n")
+        
+        if L1.head.data <= L2.head.data:
+            #L1.head = L1.head.next
+            result.head = L1.head
+            L1.head = L1.head.next
+        else: # L1.head.data > L2.head.data
+            result.head = L2.head
+            L2.head = L2.head.next
+
+        result.head = result.head.next
+
+    if L2.head.next != None:
+        result.head = L2.head
+        L2.head = L2.head.next
+
+    if L1.head.next != None:
+        result.head = L1.head
+        L1.head = L1.head.next
+        
+    return result
+
+##############################################################
+        
+#Initializing two linked lists
+LinkedList1 = LinkedList();
+LinkedList2  = LinkedList();
+
+#Creating some nodes for LinkedList 1
+Node11 = Node(2)
+Node12 = Node(5)
+Node13 = Node(7)
+
+Node11.next = Node12
+Node12.next = Node13
+
+#Creating some nodes for LinkedList 2
+Node21 = Node(3)
+Node22 = Node(11)
+
+Node21.next = Node22
+
+LinkedList1.head = Node11;
+LinkedList2.head = Node21;
+
+#print("The head of Linked List 1 is: ", LinkedList1.head.data)
+
+#answer = MergeList(LinkedList1, LinkedList2)
+#LinkedList1.head = Node11
+
+print("The sorted list is: \n")
+while(answer.head.next != None):
+    print(answer.head.data, end = " ")
+    answer.head = answer.head.next    
+
