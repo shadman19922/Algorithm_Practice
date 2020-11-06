@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Interval{
+  int StartPoint, EndPoint;
+  //Constructor
+  Interval (int left, int right): StartPoint(left), EndPoint(right) {}
+};
+
+void MergeInterval(vector<Interval> & BusyTimes, Interval NewInterval){
+  //Note that intervals in BusyTimes are disjoint and Sorted in order.
+
+  int leftidx = -1, rightidx = -1; //Holds the index of the left most and right most interval that
+
+  //Pick out the rane of indices that will be merged
+  for(int i = 0; i < BusyTimes.size(); i++){
+    if(BusyTimes[i].EndPoint >= NewInterval.StartPoint && leftidx == -1) leftidx = i;
+    if(NewInterval.EndPoint < BusyTimes[i].EndPoint  && BusyTimes[i].StartPoint <= NewInterval.EndPoint && rightidx == -1) rightidx = i;  
+  }
+
+  int leftLimit, rightLimit;
+
+  if(BusyTimes[leftidx].start <= NewInterval.start) leftLimit = BusyTimes[leftidx].start;
+  else leftLimit = NewInterval.start;
+
+  if(BusyTimes[rightidx].end >= NewInterval.end) rightLimit = BusyTimes[rightidx].end;
+  else rightLimit = NewInterval.end;
+  
+  vector<int> Answer = {leftidx, rightidx};
+  return Answer;
+
+  BusyTimes.erase(BusyTimes.begin() + leftidx, BusyTimes.begin + rightidx);
+
+  Interval UnionInterval(leftLimit, rightLimit);
+
+  BusyTimes.insert(BusyTimes.begin() + leftidx, UnionInterval);
+}
+  
+int main(){
+  vector<Interval> GardenerTime;
+  GardenerTime.push_back(Interval(-4, -1));
+  GardenerTime.push_back(Interval(0, 2));
+  GardenerTime.push_back(Interval(3, 6));
+  GardenerTime.push_back(Interval(7, 9));
+  GardenerTime.push_back(Interval(11, 12));
+  GardenerTime.push_back(Interval(14, 17));
+
+  Interval AnotherTime(1, 8);
+  
+  vector<int> Result = MergeInterval(GardenerTime, AnotherTime);
+  cout << "The interval to be merged is the range: " << Result[0] << " and " << Result[1] << endl;
+
+  
+  return 0;
+}
