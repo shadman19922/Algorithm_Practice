@@ -1,0 +1,24 @@
+#include<iostream>
+#include<unordered_map>
+
+using namespace std;
+
+void IsPalindrome(string& Input){
+  unordered_map<string, int> char_count;// Mapping that holds the character count of each unique character in the string
+
+  for(int idx = 0; idx < Input.size(); idx++){
+    string s = Input[idx];
+    if(char_count.find(s) == char_count.end()) char_count[s] = 1;
+    else char_count[s]++;
+  }
+
+  
+  
+  
+  
+}
+
+int main(){
+
+  return 0;
+}

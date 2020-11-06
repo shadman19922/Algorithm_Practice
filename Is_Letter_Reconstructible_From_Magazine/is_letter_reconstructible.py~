@@ -1,0 +1,9 @@
+
+
+def IsLetterReconstructible(s1: str, s2: str):
+    StringCollection_1 = list()
+    StringCollection_2 = list()
+
+    for letter in s1:
+        count
+        if letter != ' '
