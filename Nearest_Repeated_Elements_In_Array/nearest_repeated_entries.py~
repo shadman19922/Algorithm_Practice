@@ -1,0 +1,6 @@
+def Nearest_Element(Paragraph: List[str]):
+    Distance_Dict = {} #Dictionary that stores the nearest distance between two instances of each 'key' (i.e. word)
+
+    for word in Paragraph:
+        
+    
