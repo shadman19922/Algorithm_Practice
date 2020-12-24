@@ -1,0 +1,147 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+//Class to keep track of event time and type (start/end)
+struct Time{
+  //public:
+  int time;
+  bool IsEnd;
+};
+
+//Class to hold a job structure
+struct ScheduledJob{
+  //public:
+  Time StartTime;
+  Time EndTime;
+
+  int Profit;
+
+  int GetStartTime(){return StartTime.time;}
+  int GetEndTime(){return EndTime.time;}
+  
+  ScheduledJob(int st, int et, int pr){
+    Profit = pr;
+    StartTime.time = st;
+    StartTime.IsEnd = false;
+
+    EndTime.time = et;
+    EndTime.time = true;
+  }
+  
+};
+
+//Sorting funnction for sorting events
+bool SortByTime(ScheduledJob &a, ScheduledJob &b){
+  //if(a.StartTime.time == b.StartTime.time) return a.EndTime.time < b.EndTime.time;
+  //else return a.StartTime.time < b.StartTime.time;
+  if(a.EndTime.time == b.EndTime.time) return a.StartTime.time < b.StartTime.time;
+  else return a.EndTime.time < b.EndTime.time;
+}
+
+//Find the first instance of a job with end time K
+int JobLocation(vector<ScheduledJob>& SortedJobs, int K){
+  int l = 0;
+  int r = SortedJobs.size() - 1;
+
+  int m = l + (r - l)/2;
+  int BinSearchIdx = -1;
+
+  //First Binary Search
+  while(l <= r && BinSearchIdx == -1){
+    if(SortedJobs[m].EndTime.time == K) BinSearchIdx = m;
+
+    else if (K < SortedJobs[m].EndTime.time){
+      r = m - 1;
+    }
+    
+    else{ // K > SortedJobs[m].EndTime.time
+      l = m + 1;
+    }
+    
+    m = l + (r - l)/2;
+  }//End of first binary search
+
+  if(BinSearchIdx == -1) return -1; //If Bin seach index isn't allocated by this point, the element does not exist
+  
+  l = 0;
+  r = BinSearchIdx;
+
+  m = l + (r - l)/2;
+  
+  while(l < r - 1){
+    if(K < SortedJobs[m].EndTime.time) l = m + 1;
+    else if(K == SortedJobs[m].EndTime.time) r = m;
+    else cout << "DaFuq??!!" << endl;
+    
+  }
+
+  //l now holds the index of first occurence
+  return l;
+}
+
+//////////////////////Main Function
+/*
+int MaximizeProfit_FromJobs(vector<int> &StartTimes, vector<int> &EndTimes, vector<int> &Profits){
+  vector<ScheduledJob> ListedJobs;
+  for(int i = 0; i < StartTimes.size(); i++) ListedJobs.push_back(ScheduledJob(StartTimes[i], EndTimes[i], Profits[i]));
+
+  sort(ListedJobs.begin(), ListedJobs.end(), SortByTime);//Sorts the jobs
+
+  int MaxTime = ListedJobs.end()->EndTime.time; // Grabs the last possible time in the jobs
+  cout << "The maximum time is: "<< MaxTime << endl;
+  
+  vector<int> Solution_Array(MaxTime, 0); //Dynamic Programming array used for soltuion building
+  int max_profit = 0;
+
+  //Filling up the solution array, the idx'th index represents the max profit made by the start of the (n+1)th hour
+  for(int idx = 0; idx < Solution_Array.size(); idx++){
+    int tmp = JobLocation(ListedJobs, idx);
+    if(tmp == -1){
+      Solution_Array[idx] = max_profit;
+      continue;
+    }
+
+    cout << "At the start of the " << idx << "'th hour" << endl;
+    
+    for(int j = tmp; ListedJobs[j].EndTime.time != idx; j++){
+      max_profit = max(max_profit, Solution_Array[ListedJobs[j].StartTime.time] + ListedJobs[j].Profit);
+      Solution_Array[idx] = max_profit;
+      cout << "Current endtime is: " << j << endl;
+    }    
+  }
+  
+  return Solution_Array[Solution_Array.size() - 1];
+}
+*/
+
+
+
+int main(){
+
+  ScheduledJob Job1(1, 5, 10);
+  ScheduledJob Job2(2, 5, 15);
+  ScheduledJob Job3(4, 5, 7);
+  ScheduledJob Job4(1, 3, 5);
+  
+  vector<ScheduledJob> Jobs = {Job4, Job2, Job1, Job3};
+  //sort(Jobs.begin(), Jobs.end(), SortByTime);
+
+  cout << "The end time for Job4 is: " << Job4.EndTime.time << endl;
+
+  /*
+  cout << "The job times unarranged are: " << endl;
+  cout << "Start Time                     End Time" << endl;
+  for(int i = 0; i < Jobs.size(); i++) cout << Jobs[i].GetStartTime() << "              " << Jobs[i].GetEndTime() << endl;
+
+  sort(Jobs.begin(), Jobs.end(), SortByTime);
+  
+  cout << "The job times arranged are: " << endl;
+  cout << "Start Time                     End Time" << endl;
+  for(int i = 0; i < Jobs.size(); i++) cout << Jobs[i].GetStartTime() << "              " << Jobs[i].GetEndTime() << endl;
+  */
+  
+  return 0;
+}
