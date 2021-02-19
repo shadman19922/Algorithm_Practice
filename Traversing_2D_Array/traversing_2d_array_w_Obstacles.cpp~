@@ -1,0 +1,30 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int Number_of_Ways(vector<vector<int>> & Obstacles){
+  vector<vector<int>> Solution_Matrix;
+  Solution_Matrix.resize(Obstacles.size());
+  for(int i = 0; i < Solution_Matrix.size(); i++) Solution_Matrix[i].resize(Obstacles[0].size()); //Now I have a full allocated matrix
+
+  bool ObstacleFound = false;
+
+  Solution_Matrix[0][0] = 1; //The robot starts from the origin
+  
+  for(int i = 1; i < Solution_Matrix.size(); i++){
+    if(Obstacles[0][i-1] == 1){
+      ObstacleFound = true;
+    }
+
+    if(ObstacleFound) Solution_Matrix[0][i] = 0;
+    else Solution_Matrix[0][i] = 1;
+    
+  }
+  
+}
+
+int main(){
+
+  return 0;
+}

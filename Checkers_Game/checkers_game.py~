@@ -1,0 +1,61 @@
+def Max_Pieces_Conquered(Initial_Config):
+    if len(Initial_Config) < 3:
+        return 0
+
+    IsValid = [] #Used to store the possible locations the white piece can be in
+    Pieces_Taken = [] #Used to keep track of the maximum number of pieces taken if the white piece lands in i, j
+
+    iprime = 0
+    jprime = 0
+    
+    for i in range(len(Initial_Config)):
+        Dummy_IsValid = []
+        
+        for j in range(len(Initial_Config[i])):
+            if Initial_Config[i][j] == 'O':
+                iprime = i
+                jprime = j
+
+            Dummy_IsValid.append(0)
+
+        IsValid.append(Dummy_IsValid)
+        Pieces_Taken.append(Dummy_IsValid)
+
+
+    IsValid[iprime][jprime] = 1
+    #All the solution matrices are now filled
+
+    Max_Pieces_Taken = 0
+    
+    for i in range(len(IsValid)):
+        for j in range(len(IsValid[i])):
+
+            if j < 2: continue
+            
+            if i - 2 >= 0:
+                if IsValid[i - 2][j - 2] == 1 and Initial_Config[i - 1][j - 1] == 'X':
+                    IsValid[i][j] = 1
+                    pieces_taken_tmp = Pieces_Taken[i - 2][j - 2] + 1
+                    if(pieces_taken_tmp > Pieces_Taken[i][j]): Pieces_Taken[i][j] = pieces_taken_tmp
+                    
+                    if(pieces_taken_tmp > Max_Pieces_Taken):
+                        Max_Pieces_Taken = pieces_taken_tmp
+
+
+
+            if i + 2 < len(Initial_Config):
+                if IsValid[i + 2][j - 2] == 1 and Initial_Config[i + 1][j - 1] == 'X':
+                    IsValid[i][j] = 1
+                    pieces_taken_tmp = Pieces_Taken[i + 2][j - 2] + 1
+
+                    if(pieces_taken_tmp > Pieces_Taken[i][j]): Pieces_Taken[i][j] = pieces_taken_tmp
+
+                    if(pieces_taken_tmp > Max_Pieces_Taken):
+                        Max_Pieces_Taken = pieces_taken_tmp
+
+
+    return Max_Pieces_Taken
+
+
+checkers_board = ['O..', '.X.', '...']
+answer = Max_Pieces_Conquered(checkers_board)
